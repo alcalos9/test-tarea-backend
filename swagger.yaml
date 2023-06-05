@@ -1,0 +1,93 @@
+openapi: 3.0.1
+info:
+  title: Test-Tarea API
+  description: API para gestionar tareas
+  version: 1.0.0
+paths:
+  /tarea/listar:
+    get:
+      summary: Obtener todas las tareas
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TareasDTO'
+  /tarea/agregar:
+    post:
+      summary: Agregar una nueva tarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponseDTO'
+  /tarea/remover/{identificador}:
+    delete:
+      summary: Eliminar una tarea por identificador
+      parameters:
+        - in: path
+          name: identificador
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponseDTO'
+  /tarea/editar:
+    put:
+      summary: Editar una tarea
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+components:
+  schemas:
+    Tarea:
+      type: object
+      properties:
+        identificador:
+          type: integer
+          format: int64
+        descripcion:
+          type: string
+        fechaCreacion:
+          type: string
+          format: date
+        vigente:
+          type: boolean
+    TareasDTO:
+      type: object
+      properties:
+        tareas:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tarea'
+    CommonResponseDTO:
+      type: object
+      properties:
+        message:
+          type: string
+
